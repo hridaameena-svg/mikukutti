@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Be My Valentine 💖</title>
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        background: linear-gradient(135deg, #ffd6e8, #fff0f6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Comic Sans MS", "Poppins", cursive;
+        overflow: hidden;
+    }
+
+    .flowers span {
+        position: absolute;
+        font-size: 24px;
+        animation: float 10s linear infinite;
+        opacity: 0.6;
+    }
+
+    @keyframes float {
+        0% { transform: translateY(100vh) rotate(0deg); }
+        100% { transform: translateY(-10vh) rotate(360deg); }
+    }
+
+    .card {
+        background: white;
+        padding: 40px;
+        border-radius: 25px;
+        width: 360px;
+        text-align: center;
+        box-shadow: 0 20px 40px rgba(255, 105, 180, 0.3);
+        z-index: 2;
+    }
+
+    h1 {
+        color: #ff4d88;
+        margin-bottom: 20px;
+    }
+
+    p {
+        font-size: 18px;
+        color: #444;
+    }
+
+    .buttons {
+        margin-top: 25px;
+        position: relative;
+    }
+
+    button {
+        background: #ff80ab;
+        border: none;
+        color: white;
+        padding: 12px 22px;
+        margin: 10px;
+        border-radius: 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: transform 0.2s, background 0.2s;
+    }
+
+    button:hover {
+        background: #ff4d88;
+        transform: scale(1.1);
+    }
+
+    .no-run {
+        position: absolute;
+    }
+
+    .confetti {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        animation: confetti 3s linear infinite;
+    }
+
+    @keyframes confetti {
+        0% { transform: translateY(-10vh) rotate(0deg); }
+        100% { transform: translateY(110vh) rotate(720deg); }
+    }
+</style>
+</head>
+<body>
+
+<div class="flowers"></div>
+
+<div class="card" id="card">
+    <h1>Hi Miku kutti &lt;3</h1>
+    <p>Hope you're doing fine 💕</p>
+    <div class="buttons">
+        <button onclick="nextStep()">Si</button>
+        <button onclick="nextStep()">Oui</button>
+    </div>
+</div>
+
+<script>
+let step = 0;
+const card = document.getElementById("card");
+
+function nextStep() {
+    step++;
+    if (step === 1) {
+        card.innerHTML = `
+            <h1>Can I ask you something? 🥺</h1>
+            <div class="buttons">
+                <button onclick="nextStep()">Yes</button>
+                <button class="no-run" onmouseover="runAway(this)">No</button>
+            </div>
+        `;
+    } else if (step === 2) {
+        card.innerHTML = `
+            <h1>Will you be my Valentine,<br>Mikumuse? 💘</h1>
+            <div class="buttons">
+                <button onclick="yesValentine()">Yes 💖</button>
+                <button onclick="noValentine()">No 😐</button>
+            </div>
+        `;
+    }
+}
+
+function runAway(btn) {
+    const x = Math.random() * 200 - 100;
+    const y = Math.random() * 100 - 50;
+    btn.style.transform = `translate(${x}px, ${y}px)`;
+}
+
+function yesValentine() {
+    card.innerHTML = `
+        <h1>YAYYYY!!! 🎉💖</h1>
+        <p>Free entry to my pants 😈</p>
+    `;
+    launchConfetti();
+}
+
+function noValentine() {
+    card.innerHTML = `
+        <h1>ugh 😔</h1>
+        <p>sad face only</p>
+    `;
+}
+
+function launchConfetti() {
+    for (let i = 0; i < 80; i++) {
+        const confetti = document.createElement("div");
+        confetti.className = "confetti";
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.background =
+            ["#ff4d88", "#ffd700", "#7afcff", "#c77dff"][Math.floor(Math.random()*4)];
+        confetti.style.animationDuration = (Math.random() * 2 + 2) + "s";
+        document.body.appendChild(confetti);
+    }
+}
+
+function createFlowers() {
+    const flowers = document.querySelector(".flowers");
+    const emojis = ["🌸", "🌷", "🌹", "💮", "🌺"];
+    for (let i = 0; i < 25; i++) {
+        const span = document.createElement("span");
+        span.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        span.style.left = Math.random() * 100 + "vw";
+        span.style.animationDuration = (Math.random() * 5 + 5) + "s";
+        flowers.appendChild(span);
+    }
+}
+
+createFlowers();
+</script>
+
+</body>
+</html>
